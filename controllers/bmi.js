@@ -11,6 +11,17 @@ router.get('/', ensureSignedIn, async (req, res) => {
   res.render('bmi/index', { bmiData: user.bmiData });
 });
 
+// routes/bmi.js
+router.get('/', ensureSignedIn, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const bmiData = user.bmiData.map(record => ({
+    date: record.date.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+    bmi: record.bmi,
+  }));
+  res.render('bmi/index', { bmiData, bmiTrend: JSON.stringify(bmiData) });
+});
+
+
 // Add new BMI
 router.post('/', ensureSignedIn, async (req, res) => {
   const { weight, height } = req.body;
