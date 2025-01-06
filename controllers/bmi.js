@@ -11,14 +11,24 @@ router.get('/', ensureSignedIn, async (req, res) => {
   res.render('bmi/index', { bmiData: user.bmiData });
 });
 
-// routes/bmi.js
+function getHealthTip(bmi) {
+  if (bmi < 18.5) return "Your BMI indicates you are underweight. Consider increasing your calorie intake with nutritious foods.";
+  if (bmi >= 18.5 && bmi < 24.9) return "Your BMI is within the healthy range. Maintain your current lifestyle and diet.";
+  if (bmi >= 25 && bmi < 29.9) return "Your BMI indicates you are overweight. Consider incorporating more exercise and a balanced diet.";
+  return "Your BMI indicates obesity. Consult a healthcare provider for personalized advice.";
+}
+
 router.get('/', ensureSignedIn, async (req, res) => {
   const user = await User.findById(req.user.id);
   const bmiData = user.bmiData.map(record => ({
-    date: record.date.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+    date: record.date.toISOString().split('T')[0],
     bmi: record.bmi,
   }));
-  res.render('bmi/index', { bmiData, bmiTrend: JSON.stringify(bmiData) });
+
+  const latestBMI = bmiData.length > 0 ? bmiData[bmiData.length - 1].bmi : null;
+  const healthTip = latestBMI ? getHealthTip(latestBMI) : "No BMI data available.";
+
+  res.render('bmi/index', { bmiData, bmiTrend: JSON.stringify(bmiData), healthTip });
 });
 
 
