@@ -1,34 +1,17 @@
 // models/user.js
-const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
-// Shortcut variable
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
 const BMISchema = new mongoose.Schema({
   weight: Number,
   height: Number,
   bmi: Number,
   date: { type: Date, default: Date.now },
-})
-
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  bmiDate: [BMISchema],
 });
 
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
+const UserSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  bmiData: [BMISchema],
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', UserSchema);
