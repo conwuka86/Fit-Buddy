@@ -1,107 +1,69 @@
-/* General styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  color: #333;
-}
-
-header {
-  background: #007bff;
-  color: #fff;
-  padding: 1rem 0;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-}
-
-header nav a {
-  color: #fff;
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-header nav a:hover {
-  text-decoration: underline;
-}
-
-main {
-  padding: 2rem;
-}
-
-footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 1rem 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-/* Home Container Styles */
-.home-container {
-  text-align: center;
-  padding: 2rem;
-  margin: auto;
-  max-width: 600px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.home-container h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.home-container p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #555;
-}
-
-/* BMI Form Styles */
-.bmi-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.bmi-form label {
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.bmi-form input {
-  width: 80%;
-  max-width: 300px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.bmi-form input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.bmi-form button {
-  padding: 0.7rem 2rem;
-  font-size: 1.1rem;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.bmi-form button:hover {
-  background-color: #0056b3;
-}
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  
+  nav,
+  footer {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vmin;
+    font-size: 2vh;
+    color: lightslategray;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: slategray;
+    background-color: white;
+    padding: 1vmin;
+    border-radius: 1vmin;
+  
+    &:hover {
+      color: gray;
+      background-color: lightslategray;
+      color: white;
+    }
+  }
+  
+  nav span {
+    font-size: 1.5vmin;
+    color: lightslategray;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vmin;
+  }
+  
+  form {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2vmin;
+  }
+  
+  form * {
+    font-size: 2vmin;
+    padding: 1vmin;
+    border-radius: 1vmin;
+  }
+  
+  form button[type='submit'] {
+    grid-column: span 2;
+  }
+  
+  button:hover {
+    background-color: lightslategray;
+    color: white;
+  }
