@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   ];
 });
 
-// GET /unicorns/new (new functionality) PROTECTED - only signed in users can access
+// GET /bmi/new (new functionality) PROTECTED - only signed in users can access
 router.get('/new', ensureSignedIn, (req, res) => {
   res.send('Add a bmi!');
 });
