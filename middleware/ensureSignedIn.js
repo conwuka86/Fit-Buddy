@@ -1,17 +1,17 @@
 // middleware/ensureSignedIn.js
 const jwt = require('jsonwebtoken');
 
-module.exports = function (req, res, next) {
+module.exports = (req, res, next) => {
   const token = req.cookies.token;
-  if (!token) return res.status(401).send('Unauthorized');
+  if (!token) {
+    return res.redirect('/auth/login');
+  }
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
     next();
-  } catch (err) {
-    res.status(401).send('Unauthorized');
+  } catch (error) {
+    res.redirect('/auth/login');
   }
-  if (req.session.user_id) return next();
-  res.redirect('/auth/sign-in');
 };

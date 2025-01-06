@@ -18,29 +18,42 @@ function getHealthTip(bmi) {
   return "Your BMI indicates obesity. Consult a healthcare provider for personalized advice.";
 }
 
+r// routes/bmi.js
+const express = require('express');
+const ensureSignedIn = require('../middleware/ensureSignedIn');
+const User = require('../models/user');
+
+
+// Render BMI Records
 router.get('/', ensureSignedIn, async (req, res) => {
   const user = await User.findById(req.user.id);
-  const bmiData = user.bmiData.map(record => ({
-    date: record.date.toISOString().split('T')[0],
-    bmi: record.bmi,
-  }));
-
-  const latestBMI = bmiData.length > 0 ? bmiData[bmiData.length - 1].bmi : null;
-  const healthTip = latestBMI ? getHealthTip(latestBMI) : "No BMI data available.";
-
-  res.render('bmi/index', { bmiData, bmiTrend: JSON.stringify(bmiData), healthTip });
+  const bmiData = user.bmiData || [];
+  res.render('bmi/index', { bmiData });
 });
 
-
-// Add new BMI
+// Add New BMI
 router.post('/', ensureSignedIn, async (req, res) => {
   const { weight, height } = req.body;
   const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+
   const user = await User.findById(req.user.id);
   user.bmiData.push({ weight, height, bmi });
   await user.save();
+
   res.redirect('/bmi');
 });
+
+router.get('/tips', (req, res) => {
+  const tips = [
+    "Stay hydrated by drinking at least 8 glasses of water daily.",
+    "Incorporate at least 30 minutes of physical activity into your day.",
+    "Choose whole grains over refined grains.",
+    "Eat a variety of colorful fruits and vegetables.",
+    "Practice mindful eating and avoid overeating.",
+  ];
+  res.render('bmi/tips', { tips });
+});
+
 
 // Delete BMI record
 router.delete('/:bmiId', ensureSignedIn, async (req, res) => {
