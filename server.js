@@ -44,15 +44,16 @@ app.use(require('./middleware/add-user-to-locals-and-req'));
 
 // GET /  (home page functionality)
 app.get('/', (req, res) => {
-  res.render('home.ejs', { title: 'Home Page' });
-});
+  res.render('home.ejs', { 
+    title: 'FitBuddy Your best Health Companion'});
+  });
 
 // '/auth' is the "starts with" path that the request must match
 // The "starts with" path is pre-pended to the paths
 // defined in the router module
 app.use('/auth', require('./controllers/auth'));
 
-app.use('/unicorns', require('./controllers/unicorns'));
+app.use('/bmi', require('./controllers/bmi'));
 // If you want to protect all of the routes in a controller/routes
 // app.use('/unicorns', ensureSignedIn, require('./controllers/unicorns'));
 
