@@ -10,7 +10,7 @@ const Bmis = require('../models/bmis');
 // Middleware to protect selected routes
 const ensureSignedIn = require('../middleware/ensure-signed-in');
 
-// All routes start with '/bmi'
+// All routes start with '/bmis'
 
 //router.get('/new', async (req, res) => {
 //try {
@@ -22,17 +22,15 @@ const ensureSignedIn = require('../middleware/ensure-signed-in');
 //   res.status(500).send('An error occurred');
 // }
 // });
-
+router.get('/', (req, res) => {
+  res.send('Monitor your BMI, and feel confident about yourself!');
+});
 
 // GET /bmi/new (new functionality) PROTECTED - only signed in users can access
 
-router.post('/', (req, res) => {
-  console.log('From Data:', req.body);
-  res.redirect('/bmis');
-});
 
-router.get('/new', (req, res) => {
-  res.render('bmis/new');
+router.get('/new', ensureSignedIn, (req, res) => {
+  res.send('Add a New BMI');
 });
 
 module.exports = router;

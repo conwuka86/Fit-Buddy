@@ -21,7 +21,10 @@ const bmisSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        require: true
     },
+}, {
+    timestamps: true
 });
 
 const bmis = mongoose.model('bmis', bmisSchema);
