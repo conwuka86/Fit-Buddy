@@ -9,14 +9,15 @@
   </head>
   <body>
     <h1>Here's all the bmis</h1>
-  </body>
 <nav>
     <% if (user) { %>
-    <a href="/listings">View all Listings</a>
+    <a href="/bmis">View all BMIs</a>
     <a href="/auth/sign-out">Sign Out</a>
     <% } else { %>
     <a href="/auth/sign-up">Sign Up</a>
     <a href="/auth/sign-in">Sign In</a>
+    <a href="/bmis/new">Add a New BMI</a>
     <% } %>
   </nav>
+</body>
 </html>
