@@ -1,3 +1,5 @@
+// server.js
+
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
@@ -16,12 +18,19 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+
+const authController = require('./controllers/auth.js');
+const bmiController = require('./controllers/bmis');
+
+
 // Configure Express app 
 // app.set(...)
 
 // Mount Middleware
 // app.use(...)
 
+app.use('/auth', authController);
+app.use('/bmis', bmisController);
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 // Static middleware for returning static assets to the browser
@@ -68,7 +77,7 @@ app.get('/', (req, res) => {
 // defined in the router module
 app.use('/auth', require('./controllers/auth'));
 
-app.use('/bmi', require('./controllers/healthtips'));
+app.use('/bmi', require('./controllers/bmis'));
 // If you want to protect all of the routes in a controller/routes
 // app.use('/unicorns', ensureSignedIn, require('./controllers/unicorns'));
 

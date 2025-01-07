@@ -1,5 +1,12 @@
+// controllers/bmis.js
+
 const express = require('express');
 const router = express.Router();
+
+const bmi = require('../models/bmi');
+
+module.exports = router;
+
 
 // Middleware to protect selected routes
 const ensureSignedIn = require('../middleware/ensure-signed-in');
