@@ -23,7 +23,7 @@ const ensureSignedIn = require('../middleware/ensure-signed-in');
 // }
 // });
 router.get('/', (req, res) => {
-  res.send('Monitor your BMI, and feel confident about yourself!');
+  res.render('bmis/index.ejs', { title: 'All BMIs' });
 });
 
 // GET /bmi/new (new functionality) PROTECTED - only signed in users can access
