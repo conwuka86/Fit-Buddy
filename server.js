@@ -18,6 +18,7 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+const isSignedIn = require('./middleware/is-signed-in.js');
 
 const authController = require('./controllers/auth.js');
 const bmiController = require('./controllers/bmis');
@@ -30,7 +31,7 @@ const bmiController = require('./controllers/bmis');
 // app.use(...)
 
 app.use('/auth', authController);
-app.use('/bmis', bmisController);
+app.use('/bmis', isSignedIn, bmisController);
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 // Static middleware for returning static assets to the browser
