@@ -1,0 +1,20 @@
+<!-- views/bmis/new.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a New BMI</title>
+</head>
+<body>
+    <!-- Include the navbar partial -->
+    <% include ../partials/navbar.ejs %>
+
+    <h1>Add a New BMI!</h1>
+
+    <form action="/bmis" method="POST">
+        <!-- Form fields will go here -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -3,9 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const bmi = require('../models/bmi');
+const bmi = require('./models/bmi');
 
-module.exports = router;
 
 
 // Middleware to protect selected routes
@@ -24,7 +23,6 @@ try {
 }
 });
 
-module.exports = router;
 
 // GET /healthtips (index functionality) UN-PROTECTED - all users can access
 router.get('/', (req, res) => {
@@ -44,5 +42,8 @@ router.get('/new', ensureSignedIn, (req, res) => {
 
 router.post
 
+router.get('/bmis/new', (req, res) => {
+  res.render('bmis/new');
+});
 
 module.exports = router;
