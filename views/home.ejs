@@ -7,60 +7,68 @@
   </div>
 
   <!-- BMI Form -->
-  <div class="form-section">
-    <h2>Calculate Your BMI</h2>
-    <form id="bmi-form" class="bmi-form">
-      <div class="form-group">
-        <label for="weight">Enter your weight (lbs):</label>
-        <input type="number" id="weight" name="weight" placeholder="Weight in lbs" required>
-      </div>
-      <div class="form-group">
-        <label for="height">Enter your height (cm):</label>
-        <input type="number" id="height" name="height" placeholder="Height in cm" required>
-      </div>
-      <button type="submit" class="btn">Calculate BMI</button>
-    </form>
-
-    <!-- Output for BMI -->
-    <div id="bmi-output" class="bmi-output" style="display: none;">
-      <p>Your BMI is: <span id="bmi-value"></span></p>
+  <body>
+    <div class="container">
+      <h1>BMI Calculator</h1>
+      <form id="bmiForm">
+        <div class="form-group">
+          <label for="weight">Weight (lbs):</label>
+          <input type="number" id="weight" placeholder="Enter your weight in pounds" required>
+        </div>
+        <div class="form-group">
+          <label for="heightFeet">Height (feet):</label>
+          <input type="number" id="heightFeet" placeholder="Enter feet" required>
+        </div>
+        <div class="form-group">
+          <label for="heightInches">Height (inches):</label>
+          <input type="number" id="heightInches" placeholder="Enter inches" required>
+        </div>
+        <button type="submit">Calculate BMI</button>
+      </form>
+      <div id="bmiResult" class="result" style="display: none;"></div>
     </div>
-  </div>
-</section>
-
-<script>
-  // BMI Calculation Function
-  function calculateBMI(weight, height) {
-    if (!weight || !height || weight <= 0 || height <= 0) {
-      alert("Please enter valid positive numbers for weight and height.");
-      return null;
-    }
-
-    // Convert height from cm to meters and calculate BMI
-    const heightInMeters = height / 100;
-    const bmi = weight / (heightInMeters ** 2);
-
-    // Return the BMI rounded to 2 decimal places
-    return parseFloat(bmi.toFixed(2));
-  }
-
-  // Handle Form Submission
-  document.getElementById('bmi-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    // Get user input
-    const weight = parseFloat(document.getElementById('weight').value);
-    const height = parseFloat(document.getElementById('height').value);
-
-    // Calculate BMI
-    const bmi = calculateBMI(weight, height);
-
-    // Display the result
-    if (bmi !== null) {
-      document.getElementById('bmi-value').textContent = bmi;
-      document.getElementById('bmi-output').style.display = 'block';
-    }
-  });
-</script>
+  
+    <script>
+      document.getElementById('bmiForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+  
+        // Get weight and height values
+        const weightLbs = parseFloat(document.getElementById('weight').value);
+        const heightFeet = parseFloat(document.getElementById('heightFeet').value);
+        const heightInches = parseFloat(document.getElementById('heightInches').value);
+  
+        // Validate input
+        if (!weightLbs || weightLbs <= 0 || !heightFeet || heightFeet < 0 || !heightInches || heightInches < 0) {
+          alert('Please enter valid weight and height values.');
+          return;
+        }
+  
+        // Convert weight to kilograms and height to meters
+        const weightKg = weightLbs / 2.20462;
+        const heightMeters = ((heightFeet * 12) + heightInches) * 0.0254;
+  
+        // Calculate BMI
+        const bmi = (weightKg / (heightMeters * heightMeters)).toFixed(2);
+  
+        // Display result
+        const bmiResult = document.getElementById('bmiResult');
+        bmiResult.style.display = 'block';
+  
+        // Determine BMI category
+        let category = '';
+        if (bmi < 18.5) {
+          category = 'Underweight';
+        } else if (bmi >= 18.5 && bmi <= 24.9) {
+          category = 'Normal weight';
+        } else if (bmi >= 25 && bmi <= 29.9) {
+          category = 'Overweight';
+        } else {
+          category = 'Obesity';
+        }
+  
+        bmiResult.textContent = `Your BMI is: ${bmi} (${category})`;
+      });
+    </script>
+  </body>
 
 <%- include('./partials/footer') %>
