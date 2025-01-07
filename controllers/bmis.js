@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 
 
 router.get('/new', ensureSignedIn, (req, res) => {
-  res.send('Add a New BMI');
+  res.render('bmis/new.ejs', { title: 'Add bmis' });
 });
 
 module.exports = router;
