@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 
 const app = express();
+const path = require('path');
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT || "3000";
@@ -26,9 +27,30 @@ const bmiController = require('./controllers/bmis');
 
 // Configure Express app 
 // app.set(...)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Mount Middleware
 // app.use(...)
+
+app.use(bmisController);
+
+const passUserToView = require('./middleware/pass-user-to-view.js');
+
+app.use(
+    session({
+        secret: process.env.SESSION.SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
+app.get('/', (req, res) => {
+    res.render('index.ejs', {
+        user: req.session.user,
+    });
+});
+
 
 app.use('/auth', authController);
 app.use('/bmis', isSignedIn, bmisController);

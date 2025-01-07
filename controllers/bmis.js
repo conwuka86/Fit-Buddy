@@ -13,6 +13,19 @@ const ensureSignedIn = require('../middleware/ensure-signed-in');
 
 // All routes start with '/bmi'
 
+router.get('/bmis', async (req, res) => {
+try {
+  const bmis = await bmi.find();
+  console.log('bmis:', bmis);
+  res.send('bmis index page');
+} catch (eror) {
+  console.log('Error fetching bmis:', error);
+  res.status(500).send('An error occurred');
+}
+});
+
+module.exports = router;
+
 // GET /healthtips (index functionality) UN-PROTECTED - all users can access
 router.get('/', (req, res) => {
   const tips = [
