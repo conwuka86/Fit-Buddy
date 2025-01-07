@@ -19,10 +19,9 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-const isSignedIn = require('./middleware/is-signed-in.js');
 
 const authController = require('./controllers/auth.js');
-const bmiController = require('./controllers/bmis');
+const bmisController = require('./controllers/bmis.js');
 
 
 // Configure Express app 
@@ -35,28 +34,31 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 
-const bmiController = require('./controller/bmis');
-app.use(bmisController);
 
-const passUserToView = require('./middleware/pass-user-to-view.js');
+
 
 app.use(
     session({
-        secret: process.env.SESSION.SECRET,
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
     })
 );
+const ensureSignedIn = require('./middleware/ensure-signed-in.js');
+// Add the user (if logged in) to req.user & res.locals
+app.use(require('./middleware/add-user-to-locals-and-req'));
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', {
+    res.render('home.ejs', {
         user: req.session.user,
+        title: 'Home'
     });
 });
 
 
+
 app.use('/auth', authController);
-app.use('/bmis', isSignedIn, bmisController);
+app.use('/bmis', ensureSignedIn, bmisController);
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 // Static middleware for returning static assets to the browser
@@ -72,8 +74,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// Add the user (if logged in) to req.user & res.locals
-app.use(require('./middleware/add-user-to-locals-and-req'));
+
 
 // Routes
 

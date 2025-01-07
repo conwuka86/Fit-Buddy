@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const bmiSchema = new mongoose.Schema({
+const bmisSchema = new mongoose.Schema({
     weight: {
         type: Number,
         required: true,
@@ -24,7 +24,7 @@ const bmiSchema = new mongoose.Schema({
     },
 });
 
-const bmi = mongoose.model('bmi', bmiSchema);
+const bmis = mongoose.model('bmis', bmisSchema);
 
-module.exports = bmi;
+module.exports = bmis;
 
