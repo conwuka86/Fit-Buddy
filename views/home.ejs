@@ -1,12 +1,66 @@
-<%- include('./partials/header.ejs') %>
+<%- include('./partials/header') %>
+
 <section class="home-container">
-    <h1>Welcome to FitBuddy</h1>
-    <form action="/bmi" method="POST" class="bmi-form">
-      <label for="weight">Enter your weight (lbs):</label>
-      <input type="number" id="weight" name="weight" required>
-      <label for="height">Enter your height (cm):</label>
-      <input type="number" id="height" name="height" required>
-      <button type="submit">Calculate BMI</button>
+  <div class="welcome-section">
+    <h1>Welcome to <span class="highlight">FitBuddy</span></h1>
+    <p>Your personal companion to track and manage your BMI for a healthier lifestyle. Get started now!</p>
+  </div>
+
+  <!-- BMI Form -->
+  <div class="form-section">
+    <h2>Calculate Your BMI</h2>
+    <form id="bmi-form" class="bmi-form">
+      <div class="form-group">
+        <label for="weight">Enter your weight (lbs):</label>
+        <input type="number" id="weight" name="weight" placeholder="Weight in lbs" required>
+      </div>
+      <div class="form-group">
+        <label for="height">Enter your height (cm):</label>
+        <input type="number" id="height" name="height" placeholder="Height in cm" required>
+      </div>
+      <button type="submit" class="btn">Calculate BMI</button>
     </form>
-  </section>
-<%- include('./partials/footer.ejs') %>
+
+    <!-- Output for BMI -->
+    <div id="bmi-output" class="bmi-output" style="display: none;">
+      <p>Your BMI is: <span id="bmi-value"></span></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // BMI Calculation Function
+  function calculateBMI(weight, height) {
+    if (!weight || !height || weight <= 0 || height <= 0) {
+      alert("Please enter valid positive numbers for weight and height.");
+      return null;
+    }
+
+    // Convert height from cm to meters and calculate BMI
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters ** 2);
+
+    // Return the BMI rounded to 2 decimal places
+    return parseFloat(bmi.toFixed(2));
+  }
+
+  // Handle Form Submission
+  document.getElementById('bmi-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Get user input
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+
+    // Calculate BMI
+    const bmi = calculateBMI(weight, height);
+
+    // Display the result
+    if (bmi !== null) {
+      document.getElementById('bmi-value').textContent = bmi;
+      document.getElementById('bmi-output').style.display = 'block';
+    }
+  });
+</script>
+
+<%- include('./partials/footer') %>
