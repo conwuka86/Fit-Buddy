@@ -22,6 +22,7 @@ router.get('/new', ensureSignedIn, (req, res) => {
   res.send('Add a bmi!');
 });
 
+router.post
 
 
 module.exports = router;

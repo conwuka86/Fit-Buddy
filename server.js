@@ -48,12 +48,27 @@ app.get('/', (req, res) => {
     title: 'FitBuddy Your best Health Companion'});
   });
 
+  function calculateBMI(weight, height) {
+    if (!weight || !height || weight <= 0 || height <= 0) {
+      throw new Error("Weight and height must be positive numbers.");
+    }
+  
+    // Convert height from cm to meters
+    const heightInMeters = height / 100;
+  
+    // Calculate BMI
+    const bmi = weight / (heightInMeters ** 2);
+  
+    // Return the BMI value rounded to 2 decimal places
+    return parseFloat(bmi.toFixed(2));
+  }
+
 // '/auth' is the "starts with" path that the request must match
 // The "starts with" path is pre-pended to the paths
 // defined in the router module
 app.use('/auth', require('./controllers/auth'));
 
-app.use('/bmi', require('./controllers/bmi'));
+app.use('/bmi', require('./controllers/healthtips'));
 // If you want to protect all of the routes in a controller/routes
 // app.use('/unicorns', ensureSignedIn, require('./controllers/unicorns'));
 
