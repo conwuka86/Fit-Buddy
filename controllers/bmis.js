@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const bmi = require('./models/bmi');
+const bmi = require('../models/bmi');
 
 
 
@@ -40,7 +40,10 @@ router.get('/new', ensureSignedIn, (req, res) => {
   res.send('Add a bmi!');
 });
 
-router.post
+router.post('/bmis', (req, res) => {
+  console.log('From Date:', req.body);
+  res.redirect('/bmis');
+});
 
 router.get('/bmis/new', (req, res) => {
   res.render('bmis/new');

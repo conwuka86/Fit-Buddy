@@ -33,6 +33,9 @@ app.set('views', path.join(__dirname, 'views'));
 // Mount Middleware
 // app.use(...)
 
+app.use(express.urlencoded({ extended: true }));
+
+const bmiController = require('./controller/bmis');
 app.use(bmisController);
 
 const passUserToView = require('./middleware/pass-user-to-view.js');
