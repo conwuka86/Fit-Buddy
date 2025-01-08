@@ -5,41 +5,40 @@ const Bmi = require('../models/bmi');
 
 
 
-// Middleware to protect selected routes
-const ensureSignedIn = require('../middleware/ensure-signed-in');
-
 // All routes start with '/bmis'
 router.get("/", async (req, res) => {
-  const bmis = await bmi.find({}).populate('owner');
+  const bmis = await Bmi.find({}).populate('owner');
   res.render("bmis/index.ejs", { title: 'All BMIs', bmis });
 });
 
+router.get("/new", (req, res) => {
+  res.render("bmis/new.ejs", { tittle: 'New BMI' });
+
 router.get("/:bmiId", async (req, res) => {
-  const bmi = await bmi.findById(req.params.bmiid).populate('owner');
-  const isEdited = bmi.editedBy.some((userId) => userId.equals(req.user?._id));
-  res.render('bmis/new.ejs', { title: `BMI in ${bmi}`, bmi, isEdited });
+  const bmi = await Bmi.findById(req.params.bmiid).populate('owner');
+
+  res.render('bmis/show.ejs', { title: `BMI in ${bmi}`, bmi, isEdited });
 });
 
-router.get("/new", ensureSignedIn, (req, res) => {
-  res.render("bmis/edit.ejs");
+
 });
 
 router.post("/", async (req, res) => {
   const bmiValue = calculateBMI(req.body.weight, req.body.height);
-  await BMI.create({
+  await Bmi.create({
     userId: req.session.user._id,
     weight: req.body.weight,
     height: req.body.height,
     bmi: bmiValue,
   });
-  res.redirect("/bmis/edit.ejs");
+  res.redirect("/bmis");
 });
 
 
 
 router.put("/:id", async (req, res) => {
   const bmiValue = calculateBMI(req.body.weight, req.body.height);
-  await BMI.findByIdAndUpdate(req.params.id, {
+  await Bmi.findByIdAndUpdate(req.params.id, {
     weight: req.body.weight,
     height: req.body.height,
     bmi: bmiValue,
@@ -48,7 +47,7 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  await BMI.findByIdAndDelete(req.params.id);
+  await Bmi.findByIdAndDelete(req.params.id);
   res.redirect("/bmis");
 });
 

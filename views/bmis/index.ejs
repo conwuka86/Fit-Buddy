@@ -5,7 +5,7 @@
 <ul>
   <% bmis.forEach((bmi) => { %>
   <li>
-    A bmi <%= bmi %> owned by <%= bmi.owner %>.
+    A bmi <%= bmi.bmi %> owned by <%= bmi.owner ? bmi.owner.username : 'unknown' %>.
   </li>
   <% }) %>
 </ul>
