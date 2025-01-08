@@ -36,7 +36,8 @@ router.get('/new', ensureSignedIn, (req, res) => {
 // POST /bmis (create functionality)
 router.post('/', async (req, res) => {
   try {
-    const bmi = await Bmi.create(req.body);
+    req.body.owner = req.user._id;
+    await Bmi.create(req.body);
     res.redirect('/bmis')
   } catch (err) {
     console.log(err);
