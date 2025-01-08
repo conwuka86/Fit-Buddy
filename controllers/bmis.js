@@ -10,11 +10,17 @@ const ensureSignedIn = require('../middleware/ensure-signed-in');
 
 // All routes start with '/bmis'
 router.get("/", async (req, res) => {
-  const bmis = await BMI.find({ userId: req.session.user._id });
-  res.render("bmis/index.ejs", { bmis });
+  const bmis = await bmi.find({}).populate('owner');
+  res.render("bmis/index.ejs", { title: 'All BMIs', bmis });
 });
 
-router.get("/new", (req, res) => {
+router.get("/:bmiId", async (req, res) => {
+  const bmi = await bmi.findById(req.params.bmiid).populate('owner');
+  const isEdited = bmi.editedBy.some((userId) => userId.equals(req.user?._id));
+  res.render('bmis/new.ejs', { title: `BMI in ${bmi}`, bmi, isEdited });
+});
+
+router.get("/new", ensureSignedIn, (req, res) => {
   res.render("bmis/edit.ejs");
 });
 
@@ -29,10 +35,7 @@ router.post("/", async (req, res) => {
   res.redirect("/bmis/edit.ejs");
 });
 
-router.get("/:id/edit", async (req, res) => {
-  const bmi = await BMI.findById(req.params.id);
-  res.render("bmis/edit", { bmi });
-});
+
 
 router.put("/:id", async (req, res) => {
   const bmiValue = calculateBMI(req.body.weight, req.body.height);
