@@ -2,23 +2,18 @@
 
 <h2>Details</h2>
 <p>weightLbs: <%= bmi.weight %> lbs</p>
-<p>:heightFeet $<%= bmi.height %>feet</p>
+<p>heightFeet: $<%= bmi.height %>feet</p>
 <p>heightInches: <%= bmi.height %>inches</p>
-<p>Added on: <%= listing.createdAt.toLocaleDateString() %></p>
+<p>Added on: <%= bmi.createdAt.toLocaleDateString() %></p>
 <h2>Owner</h2>
-<% if (listing.owner?._id.equals(user?._id)) { %>
-<p>You own this!</p>
+<% if (bmi.owner?._id.equals(user?._id)) { %>
+<p>Your BMI record!</p>
 <% } else { %>
-<p>You don't own this, <%= listing.owner.username %> does!</p>
-<% } %> <% if (isFavorited) { %>
-<p>This Listing is a Favorite of Yours</p>
+<p>Sorry, you don't have access</p>
+<% } %> <% if (isEdited) { %>
+<p>This is an adited record of yours</p>
 <% } else if (user) { %>
-<form action="/listings/<%= listing._id %>/favorites" method="POST">
-  <button type="submit">Add to Favorites</button>
+<form action="/bmis/<%= bmi._id %>/edited" method="POST">
+  <button type="submit">Add to Edited</button>
 </form>
 <% } %> <%- include('../partials/footer.ejs')%>
-
-
-const weightLbs = bmiBody.weight
-const heightFeet = bmiBody.heightFeet
-const heightInches = bmiBody.heightInches

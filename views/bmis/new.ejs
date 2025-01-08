@@ -1,7 +1,5 @@
-<!-- views/bmis/index.ejs -->
 <%- include('../partials/header.ejs') %>
 
-<body>
   <div class="container">
     <h1>BMI Calculator</h1>
     <form action="/bmis" method="POST">
@@ -19,11 +17,8 @@
       </div>
       <button type="submit">Calculate BMI</button>
     </form>
-    <div id="bmiResult" class="result" style="display: none;"></div>
+    <div id="bmiResult" class="result" style="display:block"></div>
   </div>
-
-  
-</body>
 
 <%- include('../partials/footer.ejs') %>
 
