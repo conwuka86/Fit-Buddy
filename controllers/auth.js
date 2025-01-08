@@ -45,7 +45,7 @@ router.post('/sign-in', async (req, res) => {
     // Verify the password
     const valid = bcrypt.compareSync(req.body.password, user.password);
     if (!valid) throw new Error('Invalid password');
-    req.session.user_id = user_id;
+    req.session.user_id = user._id;
     // Update path to the functionality YOU want
     console.log (req.session);
     res.redirect('/');

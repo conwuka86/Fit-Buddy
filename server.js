@@ -61,16 +61,11 @@ app.get('/', (req, res) => {
   });
 
 
-// '/auth' is the "starts with" path that the request must match
-// The "starts with" path is pre-pended to the paths
-// defined in the router module
-app.use('/auth', require('./controllers/auth'));
+app.use('/auth', authcontrollers);
 
 app.use('/bmis', require('./controllers/bmis'));
-
-app.use(require('./middleware/ensure-signed-in'));
-
-app.use('/', require('./controllers/bmis'));
+const ensureSignedIn = require('./middleware/ensure-signed-in.js');
+app.use('/bmis', ensureSignedIn, bmisController);
 
 
 
