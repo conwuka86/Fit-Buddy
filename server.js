@@ -35,12 +35,6 @@ app.set('views', path.join(__dirname, 'views'));
 // app.use(...)
 
 
-const ensureSignedIn = require('./middleware/ensure-signed-in.js');
-
-
-
-app.use('/auth', authController);
-app.use('/bmis', ensureSignedIn, bmisController);
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 // Static middleware for returning static assets to the browser
