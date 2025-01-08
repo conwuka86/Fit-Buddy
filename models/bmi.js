@@ -14,6 +14,11 @@ const bmiSchema = new Schema({
         required: true,
         min: 0,
     },
+    bmi: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
