@@ -35,15 +35,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 
 
-
-
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true,
-    })
-);
 const ensureSignedIn = require('./middleware/ensure-signed-in.js');
 // Add the user (if logged in) to req.user & res.locals
 app.use(require('./middleware/add-user-to-locals-and-req'));
