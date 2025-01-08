@@ -14,18 +14,13 @@ const bmiSchema = new Schema({
         required: true,
         min: 0,
     },
-    bmi: {
-        type: Number,
-        required: false,
-        min: 0,
-    },
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         require: true
     },
     editedBy: {
-        type: [this.schema.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'User'
     },
 }, {
