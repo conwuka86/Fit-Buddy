@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 
 const app = express();
+
 const path = require('path');
 
 // Set the port from environment variable or default to 3000
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
+
 
 
 const authController = require('./controllers/auth.js');
@@ -32,19 +34,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Mount Middleware
 // app.use(...)
 
-app.use(express.urlencoded({ extended: true }));
-
 
 const ensureSignedIn = require('./middleware/ensure-signed-in.js');
-// Add the user (if logged in) to req.user & res.locals
-app.use(require('./middleware/add-user-to-locals-and-req'));
-
-app.get('/', (req, res) => {
-    res.render('home.ejs', {
-        user: req.session.user,
-        title: 'Home'
-    });
-});
 
 
 
@@ -65,30 +56,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
+// Add the user (if logged in) to req.user & res.locals
+app.use(require('./middleware/add-user-to-locals-and-req'));
 
 // Routes
 
 // GET /  (home page functionality)
 app.get('/', (req, res) => {
-  res.render('home.ejs', { 
-    title: 'FitBuddy Your best Health Companion'});
+  res.render('home.ejs', { title: 'FitBuddy'});
   });
 
-  function calculateBMI(weight, height) {
-    if (!weight || !height || weight <= 0 || height <= 0) {
-      throw new Error("Weight and height must be positive numbers.");
-    }
-  
-    // Convert height from cm to meters
-    const heightInMeters = height / 100;
-  
-    // Calculate BMI
-    const bmi = weight / (heightInMeters ** 2);
-  
-    // Return the BMI value rounded to 2 decimal places
-    return parseFloat(bmi.toFixed(2));
-  }
 
 // '/auth' is the "starts with" path that the request must match
 // The "starts with" path is pre-pended to the paths
@@ -96,8 +73,10 @@ app.get('/', (req, res) => {
 app.use('/auth', require('./controllers/auth'));
 
 app.use('/bmis', require('./controllers/bmis'));
-// If you want to protect all of the routes in a controller/routes
-// app.use('/unicorns', ensureSignedIn, require('./controllers/unicorns'));
+
+app.use(require('./middleware/ensure-signed-in'));
+
+app.use('/', require('./controllers/bmis'));
 
 
 
