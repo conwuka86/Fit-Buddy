@@ -1,0 +1,24 @@
+<%- include('../partials/header.ejs') %>
+
+<h2>Details</h2>
+<p>weightLbs: <%= bmi.weight %> lbs</p>
+<p>:heightFeet $<%= bmi.height %>feet</p>
+<p>heightInches: <%= bmi.height %>inches</p>
+<p>Added on: <%= listing.createdAt.toLocaleDateString() %></p>
+<h2>Owner</h2>
+<% if (listing.owner?._id.equals(user?._id)) { %>
+<p>You own this!</p>
+<% } else { %>
+<p>You don't own this, <%= listing.owner.username %> does!</p>
+<% } %> <% if (isFavorited) { %>
+<p>This Listing is a Favorite of Yours</p>
+<% } else if (user) { %>
+<form action="/listings/<%= listing._id %>/favorites" method="POST">
+  <button type="submit">Add to Favorites</button>
+</form>
+<% } %> <%- include('../partials/footer.ejs')%>
+
+
+const weightLbs = bmiBody.weight
+const heightFeet = bmiBody.heightFeet
+const heightInches = bmiBody.heightInches

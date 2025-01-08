@@ -1,8 +1,9 @@
 // models/bmi.js
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const bmisSchema = new mongoose.Schema({
+const bmiSchema = new Schema({
     weight: {
         type: Number,
         required: true,
@@ -23,11 +24,14 @@ const bmisSchema = new mongoose.Schema({
         ref: 'User',
         require: true
     },
+    editedBy: {
+        type: [this.schema.Types.ObjectId],
+        ref: 'User'
+    },
 }, {
     timestamps: true
 });
 
-const bmis = mongoose.model('bmis', bmisSchema);
+module.exports = mongoose.model('bmi', bmiSchema);
 
-module.exports = bmis;
 
