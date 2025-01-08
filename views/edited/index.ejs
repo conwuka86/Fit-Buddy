@@ -1,13 +1,20 @@
-<!-- views/bmis/index.ejs -->
 <%- include('../partials/header.ejs') %> 
 
 
 <ul>
   <% bmis.forEach((bmi) => { %>
   <li>
-    A bmi <%= bmi %> owned by <%= bmi.owner %>.
+    <a href="/bmis/<%= bmi._id %>"
+        >BMI record for <%= bmi.owner.username %>.</a>
+        >
+        <form
+            action="/bmis/<%= bmi._id %>/edited?_method=DELETE"
+             method="POST"
+        >
+             <button type="submit">Remove from Edited</button>
+        </form>
   </li>
   <% }) %>
 </ul>
 
-<%- include('../partials/footer.ejs') %>
+<%- include('../partials/footer.ejs')%>
