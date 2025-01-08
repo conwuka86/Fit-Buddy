@@ -1,5 +1,3 @@
-// controllers/bmis.js
-
 const express = require('express');
 const router = express.Router();
 
@@ -11,43 +9,52 @@ const Bmi = require('../models/bmi');
 const ensureSignedIn = require('../middleware/ensure-signed-in');
 
 // All routes start with '/bmis'
-
-//router.get('/new', async (req, res) => {
-//try {
-//   const bmis = await bmis.find();
-//   console.log('bmis:', bmis);
-//   res.redirect('bmis index page');
-// } catch (eror) {
-//   console.log('Error fetching bmis:', error);
-//   res.status(500).send('An error occurred');
-// }
-// });
-// Get /bmis (index functionality) PROTECTED - only signed in users can access
-router.get('/', async (req, res) => {
-  const bmis = await Bmi.find ({}); 
-  res.render('bmis/index.ejs', { title: 'All BMIs', bmis });
+router.get("/", async (req, res) => {
+  const bmis = await BMI.find({ userId: req.session.user._id });
+  res.render("bmis/index.ejs", { bmis });
 });
 
-// GET /bmis/new (new functionality) PROTECTED - only signed in users can access
-
-
-router.get('/new', ensureSignedIn, (req, res) => {
-  res.render('bmis/new.ejs', { title: 'Add BMI' });
+router.get("/new", (req, res) => {
+  res.render("bmis/edit.ejs");
 });
 
-// POST /bmis (create functionality)
-router.post('/', async (req, res) => {
-  const bmiObject = bmiCalculator(req.body)
-  try {
-    bmiObject.owner = req.session.user._id;
-    console.log(bmiObject)
-    await Bmi.create(bmiObject);
-    res.redirect('/bmis')
-  } catch (err) {
-    console.log(err);
-    res.redirect('/bmis/new');
-  }
+router.post("/", async (req, res) => {
+  const bmiValue = calculateBMI(req.body.weight, req.body.height);
+  await BMI.create({
+    userId: req.session.user._id,
+    weight: req.body.weight,
+    height: req.body.height,
+    bmi: bmiValue,
+  });
+  res.redirect("/bmis/edit.ejs");
 });
+
+router.get("/:id/edit", async (req, res) => {
+  const bmi = await BMI.findById(req.params.id);
+  res.render("bmis/edit", { bmi });
+});
+
+router.put("/:id", async (req, res) => {
+  const bmiValue = calculateBMI(req.body.weight, req.body.height);
+  await BMI.findByIdAndUpdate(req.params.id, {
+    weight: req.body.weight,
+    height: req.body.height,
+    bmi: bmiValue,
+  });
+  res.redirect("/bmis/new");
+});
+
+router.delete("/:id", async (req, res) => {
+  await BMI.findByIdAndDelete(req.params.id);
+  res.redirect("/bmis");
+});
+
+function calculateBMI(weight, height) {
+  const heightInMeters = height / 100;
+  return parseFloat((weight / (heightInMeters ** 2)).toFixed(2));
+}
+
+module.exports = router;
 
 function bmiCalculator (bmiBody) {
   
