@@ -104,7 +104,7 @@ app.get('/', (req, res) => {
 // defined in the router module
 app.use('/auth', require('./controllers/auth'));
 
-app.use('/bmi', require('./controllers/bmis'));
+app.use('/bmis', require('./controllers/bmis'));
 // If you want to protect all of the routes in a controller/routes
 // app.use('/unicorns', ensureSignedIn, require('./controllers/unicorns'));
 

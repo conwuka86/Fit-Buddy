@@ -10,7 +10,7 @@
   <body>
     <div class="container">
       <h1>BMI Calculator</h1>
-      <form id="bmiForm">
+      <form action="/bmis" method="POST">
         <div class="form-group">
           <label for="weight">Weight (lbs):</label>
           <input type="number" id="weight" placeholder="Enter your weight in pounds" required>
@@ -28,47 +28,6 @@
       <div id="bmiResult" class="result" style="display: none;"></div>
     </div>
   
-    <script>
-      document.getElementById('bmiForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-  
-        // Get weight and height values
-        const weightLbs = parseFloat(document.getElementById('weight').value);
-        const heightFeet = parseFloat(document.getElementById('heightFeet').value);
-        const heightInches = parseFloat(document.getElementById('heightInches').value);
-  
-        // Validate input
-        if (!weightLbs || weightLbs <= 0 || !heightFeet || heightFeet < 0 || !heightInches || heightInches < 0) {
-          alert('Please enter valid weight and height values.');
-          return;
-        }
-  
-        // Convert weight to kilograms and height to meters
-        const weightKg = weightLbs / 2.20462;
-        const heightMeters = ((heightFeet * 12) + heightInches) * 0.0254;
-  
-        // Calculate BMI
-        const bmi = (weightKg / (heightMeters * heightMeters)).toFixed(2);
-  
-        // Display result
-        const bmiResult = document.getElementById('bmiResult');
-        bmiResult.style.display = 'block';
-  
-        // Determine BMI category
-        let category = '';
-        if (bmi < 18.5) {
-          category = 'Underweight';
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
-          category = 'Normal weight';
-        } else if (bmi >= 25 && bmi <= 29.9) {
-          category = 'Overweight';
-        } else {
-          category = 'Obesity';
-        }
-  
-        bmiResult.textContent = `Your BMI is: ${bmi} (${category})`;
-      });
-    </script>
   </body>
 
 <%- include('./partials/footer') %>
