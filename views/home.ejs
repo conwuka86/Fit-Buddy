@@ -5,28 +5,70 @@
     <h1>Welcome to <span class="highlight">FitBuddy</span></h1>
     <p>Your personal companion to track and manage your BMI for a healthier lifestyle. Get started now!</p>
   </div>
-  
+
   <body>
     <div class="container">
       <h1>BMI Calculator</h1>
-      <form action="/bmis" method="POST">
-        <div class="form-group">
-          <label for="weight">Weight (lbs):</label>
-          <input type="number" id="weight" placeholder="Enter your weight in pounds" required>
-        </div>
-        <div class="form-group">
-          <label for="heightFeet">Height (feet):</label>
-          <input type="number" id="heightFeet" placeholder="Enter feet" required>
-        </div>
-        <div class="form-group">
-          <label for="heightInches">Height (inches):</label>
-          <input type="number" id="heightInches" placeholder="Enter inches" required>
-        </div>
-        <button type="submit">Calculate BMI</button>
+      <form id="bmiForm">
+        <label for="weight">Weight (lbs):</label>
+        <input type="number" id="weight" placeholder="Enter your weight" required>
+  
+        <label for="heightFeet">Height (feet):</label>
+        <input type="number" id="heightFeet" placeholder="Enter feet part of height" required>
+  
+        <label for="heightInches">Height (inches):</label>
+        <input type="number" id="heightInches" placeholder="Enter inches part of height" required>
+  
+        <button type="button" onclick="calculateBMI()">Calculate BMI</button>
       </form>
-      <div id="bmiResult" class="result" style="display: none;"></div>
+  
+      <div id="result" class="result" style="display: none;">
+        <h2>BMI Result</h2>
+        <p><strong>BMI:</strong> <span id="bmiValue"></span></p>
+        <p><strong>Category:</strong> <span id="bmiCategory"></span></p>
+        <div id="healthTips" class="tips"></div>
+      </div>
     </div>
   
+    <script>
+      function calculateBMI() {
+        const weightLbs = parseFloat(document.getElementById('weight').value);
+        const heightFeet = parseFloat(document.getElementById('heightFeet').value);
+        const heightInches = parseFloat(document.getElementById('heightInches').value);
+  
+        if (isNaN(weightLbs) || isNaN(heightFeet) || isNaN(heightInches)) {
+          alert('Please enter valid numbers for all fields.');
+          return;
+        }
+  
+        const weightKg = weightLbs / 2.20462;
+        const heightMeters = ((heightFeet * 12) + heightInches) * 0.0254;
+  
+        const bmi = parseFloat((weightKg / (heightMeters * heightMeters)).toFixed(2));
+        let category = '';
+        let healthTips = '';
+  
+        if (bmi < 18.5) {
+          category = 'Underweight';
+          healthTips = 'You should eat a balanced diet with more calories. Focus on nutrient-rich foods like nuts, whole grains, and lean protein.';
+        } else if (bmi >= 18.5 && bmi <= 24.9) {
+          category = 'Normal weight';
+          healthTips = 'Maintain your current weight by staying active and eating a healthy, balanced diet.';
+        } else if (bmi >= 25 && bmi <= 29.9) {
+          category = 'Overweight';
+          healthTips = 'Consider a healthier diet and regular exercise to manage your weight effectively.';
+        } else {
+          category = 'Obesity';
+          healthTips = 'It is advisable to consult a healthcare provider for personalized advice. Focus on a healthy diet and regular physical activity.';
+        }
+  
+        document.getElementById('bmiValue').innerText = bmi;
+        document.getElementById('bmiCategory').innerText = category;
+        document.getElementById('healthTips').innerText = healthTips;
+  
+        document.getElementById('result').style.display = 'block';
+      }
+    </script>
   </body>
 
 <%- include('./partials/footer') %>

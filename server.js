@@ -57,7 +57,7 @@ app.use(require('./middleware/add-user-to-locals-and-req'));
 
 // GET /  (home page functionality)
 app.get('/', (req, res) => {
-  res.render('home.ejs', { title: 'FitBuddy'});
+  res.render('home.ejs', { title: 'FitBuddy'})
   });
 
 
