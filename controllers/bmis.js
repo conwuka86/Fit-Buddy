@@ -79,22 +79,10 @@ router.put("/:id", async (req, res) => {
   res.redirect("/bmis/new");
 });
 
-router.delete("/bmis/:bmi._id", async (req, res) => {
-  try {
-    const bmi = await bmi.findById(req.params.bmi._Id);
-
-    if (bmi.owner.equals(req.session.user._id)) {
-      console.log('Permission granted');
-    } else {
-      console.log('Permission denied');
-    }
-
-    res.send(`A DELETE request was issued for ${req.params.bmi._Id}`);
-  } catch (error) {
-    console.log(error);
-    res.redirect('/');
-  }
-});
+  router.delete("/:bmiId", async (req, res) => {
+    await Bmi.findByIdAndDelete(req.params.bmiId);
+    res.redirect("/bmis/new");
+  });
 
 //function bmiCalculator(weight, height) {
  // const heightInMeters = height / 100;
