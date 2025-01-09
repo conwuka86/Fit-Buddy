@@ -84,6 +84,7 @@ router.put("/:id", async (req, res) => {
     res.redirect("/bmis/new");
   });
 
+
 //function bmiCalculator(weight, height) {
  // const heightInMeters = height / 100;
  // return parseFloat((weight / (heightInMeters ** 2)).toFixed(2));

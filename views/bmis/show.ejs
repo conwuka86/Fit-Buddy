@@ -2,12 +2,12 @@
 
 <div>
 <%= bmi.bmi %>
-<% if (bmi.owner._id.equals(user._id)) { %>
-    <p>Your BMI!</p>
-
+<p>Your BMI!</p>
+<% if (bmi.owner?._id.equals(user._id)) { %>
     <form action="/bmis/<%= bmi._id %>?_method=DELETE" method="POST">
         <button type="submit">Delete this BMI</button>
       </form>
+      <% } %>
   </div>
 
 
