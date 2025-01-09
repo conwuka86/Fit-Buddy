@@ -52,8 +52,8 @@ router.get("/new", (req, res) => {
   res.render("bmis/new.ejs", { title: 'New BMI' });
 });
 
-router.get("/:bmiId", async (req, res) => {
-  const bmi = await Bmi.findById(req.params.bmiId).populate('owner');
+router.get("/:id", async (req, res) => {
+  const bmi = await Bmi.findById(req.params._id).populate('owner');
 
   res.render('bmis/show.ejs', { title: `BMI in ${bmi}`, bmi, isEdited });
 });
@@ -81,7 +81,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   await Bmi.findByIdAndDelete(req.params.id);
-  res.redirect("/bmis/show", {title: 'View BMI', bmi, user: req.session.user_id = user._id});
+  res.redirect("/bmis/show", {title: 'View BMI', bmi_id, user: req.session.user_id = user._id});
 });
 
 //function bmiCalculator(weight, height) {
