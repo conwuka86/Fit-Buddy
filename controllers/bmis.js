@@ -38,7 +38,7 @@ async function bmiCalculator (bmiBody) {
   console.log(typeof weightKg)
   console.log(typeof heightMeters)
   console.log(typeof bmi)
-  return {weight: weightKg, height: heightMeters, bmi}
+  return {bmi}
 };
 
 
@@ -58,9 +58,9 @@ router.get("/:id", async (req, res) => {
   res.render('bmis/show.ejs', { title: `Your BMI`, bmi });
 });
 
-router.get("/:id/edit", async (req, res) => {
+router.get("/:bmiId/edit", async (req, res) => {
   try {
-    const bmi = await Bmi.findById(req.params.id); // Fetch BMI by ID
+    const bmi = await Bmi.findById(req.params.bmiId); // Fetch BMI by ID
     res.render("bmis/edit.ejs", { title: "Edit BMI", bmi });
   } catch (error) {
     console.error("Error fetching BMI for editing:", error);
@@ -73,6 +73,9 @@ router.post("/", async (req, res) => {
   console.log(req.body)
   const bmiValue = await bmiCalculator(req.body);
   bmiValue.owner = req.session.user_id
+  bmiValue.weight = parseFloat(req.body.weight)
+  bmiValue.heightFeet = parseFloat(req.body.heightFeet)
+  bmiValue.heightInches = parseFloat(req.body.heightInches)
   console.log(bmiValue)
   await Bmi.create(bmiValue);
   res.redirect("/bmis");
@@ -83,14 +86,15 @@ router.post("/", async (req, res) => {
 router.put("/:bmiId", async (req, res) => {
   try {
     const updatedBmiData = await bmiCalculator(req.body);
-    await Bmi.findByIdAndUpdate(req.params.id, {
-      weight: updatedBmiData.weight,
-      height: updatedBmiData.height,
+    await Bmi.findByIdAndUpdate(req.params.bmiId, {
+      weight:parseFloat(req.body.weight),
+      heightFeet:parseFloat(req.body.heightFeet),
+      heightInches:parseFloat(req.body.heightInches),
       bmi: updatedBmiData.bmi,
       category: updatedBmiData.category,
     });
 
-    res.redirect(`/bmis/${req.params.id}`);
+    res.redirect(`/bmis/${req.params.bmiId}`);
   } catch (error) {
     console.error("Error updating BMI:", error);
     res.status(500).send("Failed to update BMI");

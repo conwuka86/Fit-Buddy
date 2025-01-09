@@ -9,7 +9,12 @@ const bmiSchema = new Schema({
         required: true,
         min: 0,
     },
-    height: {
+    heightFeet: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
+    heightInches: {
         type: Number,
         required: true,
         min: 0,
