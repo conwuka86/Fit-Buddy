@@ -58,6 +58,17 @@ router.get("/:id", async (req, res) => {
   res.render('bmis/show.ejs', { title: `Your BMI`, bmi });
 });
 
+router.get("/:id/edit", async (req, res) => {
+  try {
+    const bmi = await Bmi.findById(req.params.id); // Fetch BMI by ID
+    res.render("bmis/edit.ejs", { title: "Edit BMI", bmi });
+  } catch (error) {
+    console.error("Error fetching BMI for editing:", error);
+    res.status(500).send("Failed to load edit form");
+  }
+});
+
+
 router.post("/", async (req, res) => {
   console.log(req.body)
   const bmiValue = await bmiCalculator(req.body);
@@ -69,7 +80,7 @@ router.post("/", async (req, res) => {
 
 
 
-router.put("/:id", async (req, res) => {
+router.put("/:bmiId", async (req, res) => {
   try {
     const updatedBmiData = await bmiCalculator(req.body);
     await Bmi.findByIdAndUpdate(req.params.id, {
