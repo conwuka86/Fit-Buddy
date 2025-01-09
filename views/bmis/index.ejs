@@ -6,7 +6,8 @@
   <% bmis.forEach((bmi) => { %>
   <li>
     <a href="/bmis/<%= bmi._id %>">A bmi <%= bmi.bmi %> owned by <%= bmi.owner ? bmi.owner.username : 'unknown' %>.</a>
-    
+    <a href="/bmis/<%= bmi._id %>/edit">Edit BMI</a>
+
   </li>
   <% }) %>
 </ul>
