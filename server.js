@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
   });
 
 
-app.use('/auth', authcontrollers);
+app.use('/auth', authController);
 
 app.use('/bmis', require('./controllers/bmis'));
 const ensureSignedIn = require('./middleware/ensure-signed-in.js');
