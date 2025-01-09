@@ -1,0 +1,20 @@
+<%- include('../partials/header.ejs') %>
+
+
+<h1>Edit BMI</h1>
+<form action="/bmis/<%= bmi._id %>?_method=PUT" method="POST">
+  <label for="weight">Weight (lbs):</label>
+  <input type="number" name="weight" id="weight" value="<%= bmi.weight %>" required>
+
+  <label for="heightFeet">Height (feet):</label>
+  <input type="number" name="heightFeet" id="heightFeet" value="<%= bmi.heightFeet %>" required>
+
+  <label for="heightInches">Height (inches):</label>
+  <input type="number" name="heightInches" id="heightInches" value="<%= bmi.heightInches %>" required>
+
+  <button type="submit">Update BMI</button>
+</form>
+
+
+
+<%- include('../partials/footer.ejs') %>

@@ -70,13 +70,20 @@ router.post("/", async (req, res) => {
 
 
 router.put("/:id", async (req, res) => {
-  const bmiValue = await bmiCalculator(req.body.weight, req.body.height);
-  await Bmi.findByIdAndUpdate(req.params.id, {
-    weight: req.body.weight,
-    height: req.body.height,
-    bmi: bmiValue,
-  });
-  res.redirect("/bmis/new");
+  try {
+    const updatedBmiData = await bmiCalculator(req.body);
+    await Bmi.findByIdAndUpdate(req.params.id, {
+      weight: updatedBmiData.weight,
+      height: updatedBmiData.height,
+      bmi: updatedBmiData.bmi,
+      category: updatedBmiData.category,
+    });
+
+    res.redirect(`/bmis/${req.params.id}`);
+  } catch (error) {
+    console.error("Error updating BMI:", error);
+    res.status(500).send("Failed to update BMI");
+  }
 });
 
   router.delete("/:bmiId", async (req, res) => {
