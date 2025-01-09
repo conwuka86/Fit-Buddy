@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Bmi = require('../models/bmi');
+const user = require('../models/user');
 
 async function bmiCalculator (bmiBody) {
   
@@ -80,7 +81,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   await Bmi.findByIdAndDelete(req.params.id);
-  res.redirect("/bmis");
+  res.redirect("/bmis/show", {title: 'View BMI', bmi, user: req.session.user_id = user._id});
 });
 
 //function bmiCalculator(weight, height) {

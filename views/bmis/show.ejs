@@ -1,19 +1,23 @@
 <%- include('../partials/header.ejs') %>
 
-<h2>Details</h2>
-<p>weightLbs: <%= bmi.weight %> lbs</p>
-<p>heightFeet: $<%= bmi.height %>feet</p>
-<p>heightInches: <%= bmi.height %>inches</p>
-<p>Added on: <%= bmi.createdAt.toLocaleDateString() %></p>
-<h2>Owner</h2>
-<% if (bmi.owner?._id.equals(user?._id)) { %>
-<p>Your BMI record!</p>
-<% } else { %>
-<p>Sorry, you don't have access</p>
-<% } %> <% if (isEdited) { %>
-<p>This is an adited record of yours</p>
-<% } else if (user) { %>
-<form action="/bmis/<%= bmi._id %>/edited" method="POST">
-  <button type="submit">Add to Edited</button>
-</form>
-<% } %> <%- include('../partials/footer.ejs')%>
+<div>
+    <% if (user) { %>
+      <a href="/bmis/new">Add BMI</a>
+      <a href="/bmis">View BMI</a>
+      
+      <% if (bmi) { %>
+        <a href="/bmis/<%= bmi._id %>/bmis">Update BMI</a>
+        <form action="/bmis/<%= bmi._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" onclick="return confirm('Are you sure you want to delete this BMI?')">Delete BMI</button>
+        </form>
+      <% } %>
+
+      <a href="/auth/sign-out">Sign Out</a>
+      <span><%= user.username %></span>
+    <% } else { %>
+      <a href="/auth/sign-up">Sign Up</a>
+      <a href="/auth/sign-in">Sign In</a>
+    <% } %>
+  </div>
+
+<%- include('../partials/footer.ejs')%>
