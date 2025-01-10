@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// Shortcut variable
 const Schema = mongoose.Schema;
 
 const applicationSchema = new Schema({
