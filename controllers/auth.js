@@ -89,19 +89,38 @@ router.get('/sign-in', (req, res) => {
 });
 
 router.post('/sign-in', async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) throw new Error('Invalid username');
-    
-    const valid = bcrypt.compareSync(req.body.password, user.password);
-    if (!valid) throw new Error('Invalid password');
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).render('auth/sign-in.ejs', {
+        title: 'Sign In',
+        error: 'Invalid email or password',
+      });
+    }
+
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).render('auth/sign-in.ejs', {
+        title: 'Sign In',
+        error: 'Invalid email or password',
+      });
+    }
+
+    // Log the user in (store user ID in session)
     req.session.user_id = user._id;
-    
-    console.log (req.session);
-    res.redirect('/');
-  } catch (e) {
-    console.log(e);
-    res.render('auth/sign-in.ejs', { title: 'Sign In' });
+
+    // Redirect to dashboard or homepage
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('auth/sign-in.ejs', {
+      title: 'Sign In',
+      error: 'Internal server error',
+    });
   }
 });
 
