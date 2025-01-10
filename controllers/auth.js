@@ -64,7 +64,7 @@ router.post('/sign-up', validateSignUp, async (req, res) => {
     req.session.user_id = user._id;
 
     // Redirect to sign-in page
-    res.redirect('/sign-in');
+    res.redirect('/');
   } catch (err) {
     console.error(err);
 
@@ -114,7 +114,7 @@ router.post('/sign-in', async (req, res) => {
     req.session.user_id = user._id;
 
     // Redirect to dashboard or homepage
-    res.redirect('/dashboard');
+    res.redirect('/');
   } catch (err) {
     console.error(err);
     res.status(500).render('auth/sign-in.ejs', {
