@@ -1,6 +1,6 @@
 # <FitBuddy>
 
-In this day and age, cyber byllying and body shaming has become an epidemic. FitBuddy is a game that offerss a safe environment to thrive as an individual and grow in our health/fitness journey at your pace and without judgement. FitBuddy allows visitors to easily check their BMI. As a registered user, BMI can be saved, updated and deleted.
+In this day and age, cyber bullying and body shaming has become an epidemic. FitBuddy is a game that offerss a safe environment to thrive as an individual and grow in our health/fitness journey at your pace and without judgement. FitBuddy allows visitors to easily check their BMI. As a registered user, BMI can be saved, updated and deleted.
 
 # [Link to Wireframe and Plan on Trello!](https://trello.com/b/Y8W3qlH5/fit-buddy)
 
