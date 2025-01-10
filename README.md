@@ -1,11 +1,16 @@
 # <FitBuddy>
 
-In this day and age, cyber byllying and body shaming has become an epidemic. FitBuddy is a game that offerss a safe environment to thrive as an individual and grow in our health/fitness journey at your pace and without judgement. FitBuddy allows visitors to easily check their BMI. As a registered user, BMI can be saved, edited or updated. This n
+In this day and age, cyber byllying and body shaming has become an epidemic. FitBuddy is a game that offerss a safe environment to thrive as an individual and grow in our health/fitness journey at your pace and without judgement. FitBuddy allows visitors to easily check their BMI. As a registered user, BMI can be saved, updated and deleted.
+
+# [Link to Wireframe and Plan on Trello!](https://trello.com/b/Y8W3qlH5/fit-buddy)
+
+
 
 # Screenshot
 
-<img src="https://i.imgur.com/kVbOltL.jpeg">
-<img src="https://i.imgur.com/hRMO9rQ.jpeg">
+<img src="https://i.imgur.com/DQSA12a.jpeg">
+<img src="https://i.imgur.com/L1LowL9.jpeg">
+<img src="https://i.imgur.com/xBxR9i2.jpeg">
 
 # Technologies Used
 
@@ -16,20 +21,25 @@ In this day and age, cyber byllying and body shaming has become an epidemic. Fit
 
 # Getting Started
 
-[Click to Play Quiz Game!](https://conwuka86.github.io/Quiz-Game/)
+[Click to Experience FitBuddy!](https://callistus-express-starter-app-6965c5c67116.herokuapp.com/)
 
-Quiz Game main page is opened.
-Player selects from the choose category drop down menu to select a category of questions to start with.
-player selects start quiz and begins.
-player has 20 seconds to complete a set of 5 questions chosing randomely.
-passing score is 5. 
-Any score less than 5 is "Fail". 
-If player does not complete the set of 5 questions before the time runs out, game ends and "Time Up!" message appears.
-If player gets all 5 questions correctly, a "Pass" message will appear.
+Clicking the link above opens FitBuddy main page
+Visitor is able to check BMI as a visitor
+Result of BMI is rendered with health tips.
+Input your weight and height and click on calculate BMI
+Sign up for more personalized experience
+Select add BMI
+You can update and delete a BMI record.
 
 # Next Steps
 
--   Future enhancement one...
-    Increse the dificulty level based on player's response and high score.
+    Future enhancements.
+    
+-   Include graph and tables for better BMI tracking
 
--   Increase the number of questions and the categories pick from
+-   Offer customizable diet plan and fitness tips
+
+-   Include activity tracker for exercising and counting steps/calories
+
+
+
