@@ -64,7 +64,7 @@ router.post('/sign-up', validateSignUp, async (req, res) => {
     req.session.user_id = user._id;
 
     // Redirect to sign-in page
-    res.redirect('/');
+    res.redirect("/auth/sign-in");
   } catch (err) {
     console.error(err);
 
