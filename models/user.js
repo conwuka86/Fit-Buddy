@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const { body, validationResult } = require('express-validator');
+
 
 
 const applicationSchema = new Schema({

@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const session = require('express-session');
-const { validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const app = express();
 
 const path = require('path');
